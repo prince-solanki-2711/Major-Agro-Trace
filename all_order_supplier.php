@@ -191,13 +191,13 @@ include("connect.php");
 
                     while ($r5 = mysqli_fetch_array($query)) {
                         echo "<tr>";
-                        echo "<td><span class='order-id-badge'>#AT-".str_pad($r5[0], 4, '0', STR_PAD_LEFT)."</span></td>";
+                        echo "<td><span class='order-id-badge'>#".str_pad($r5[0], 4, )."</span></td>";
                         echo "<td>
                                 <div class='date-text'><i class='far fa-clock me-1 text-success'></i> " . date('d M, Y', strtotime($r5[1])) . "</div>
                               </td>";
                         echo "<td>
                                 <div class='fw-bold text-dark mb-1'>Consumer #$r5[3]</div>
-                                <div class='small text-muted'>Cart ID: $r5[2]</div>
+                                
                               </td>";
                         echo "<td class='address-cell'>
                                 <i class='fas fa-truck-loading me-1 text-success'></i> $r5[4]<br>

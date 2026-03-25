@@ -136,7 +136,7 @@ session_start();
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="supplier_manage_perfume.php">
+          <a class="nav-link" href="supplier_manage_product.php">
             <i class="fas fa-seedling"></i> My Produce
           </a>
         </li>

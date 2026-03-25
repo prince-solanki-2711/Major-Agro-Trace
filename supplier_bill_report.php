@@ -211,7 +211,7 @@ $suppid = $_SESSION["sid"];
 
                     while ($r = mysqli_fetch_array($res)) {
                         echo "<tr>";
-                        echo "<td><span class='id-badge'>#AT-".str_pad($r[0], 4, '0', STR_PAD_LEFT)."</span></td>";
+                        echo "<td><span class='id-badge'>#".str_pad($r[0], 4, )."</span></td>";
                         echo "<td><div class='date-badge'><i class='far fa-clock me-2 text-success opacity-75'></i>" . date('d M, Y', strtotime($r[1])) . "</div></td>";
                         echo "<td class='fw-bold text-dark'>$r[3]</td>";
                         echo "<td>

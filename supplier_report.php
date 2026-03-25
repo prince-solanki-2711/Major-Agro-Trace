@@ -164,7 +164,7 @@ if(isset($_GET['del_id'])) {
                 <tbody>
                     <?php while ($row = mysqli_fetch_array($query)) { ?>
                     <tr>
-                        <td><span class="badge-id">#FR-<?php echo $row[0]; ?></span></td>
+                        <td><span class="badge-id">#<?php echo $row[0]; ?></span></td>
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="vendor-icon"><i class="fas fa-tractor"></i></div>

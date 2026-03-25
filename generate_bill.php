@@ -46,8 +46,8 @@ $customer_data = mysqli_fetch_assoc($customer_res);
 $customer_name = $customer_data['customer_name'];
 $customer_email = $customer_data['customer_email'];
 
-// 3. Fetch Harvest Line Items
-$items_sql = "SELECT cd.cart_quantity, cd.cart_price, pd.product_name 
+// 3. Fetch Harvest Line Items (UPDATED TO INCLUDE product_unit)
+$items_sql = "SELECT cd.cart_quantity, cd.cart_price, pd.product_name, pd.product_unit 
               FROM cart_detail cd 
               JOIN product_detail pd ON cd.product_id = pd.product_id 
               WHERE cd.cart_id = '$cartid'";
@@ -76,7 +76,6 @@ $items_res = mysqli_query($con, $items_sql);
         
         .invoice-wrapper { max-width: 850px; margin: 50px auto; padding: 40px; background: white; border-radius: 30px; box-shadow: 0 20px 50px rgba(27, 67, 50, 0.1); position: relative; overflow: hidden; border: 1px solid #e2e8f0; }
 
-        /* Blockchain Pattern Background */
         .invoice-wrapper::after { content: '\f012'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; top: -30px; right: -20px; font-size: 10rem; color: var(--agro-mint); opacity: 0.3; transform: rotate(15deg); }
 
         .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid var(--agro-mint); padding-bottom: 30px; margin-bottom: 40px; }
@@ -93,7 +92,6 @@ $items_res = mysqli_query($con, $items_sql);
         .traceability-bar { background: var(--agro-mint); padding: 15px 25px; border-radius: 12px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #bbf7d0; }
         .trace-id { font-family: monospace; font-weight: 700; color: var(--agro-forest); font-size: 1rem; }
 
-        /* Table Styling */
         .agro-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
         .agro-table th { background: var(--agro-forest); color: white; padding: 15px; font-family: 'Outfit', sans-serif; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
         .agro-table td { padding: 18px 15px; border-bottom: 1px solid #f1f5f9; font-size: 1rem; color: #475569; }
@@ -137,7 +135,7 @@ $items_res = mysqli_query($con, $items_sql);
 
     <div class="traceability-bar">
         <div class="date-badge"><i class="fas fa-calendar-check me-2 text-success"></i> Settlement Date: <strong><?php echo date("d M, Y", strtotime($order_date)); ?></strong></div>
-        <div class="trace-id"><i class="fas fa-link me-2 opacity-50"></i> TRACE-AT-<?php echo str_pad($order_id, 6, '0', STR_PAD_LEFT); ?></div>
+        
     </div>
 
     <div class="info-grid">
@@ -161,8 +159,8 @@ $items_res = mysqli_query($con, $items_sql);
         <thead>
             <tr>
                 <th style="width: 10%;">#</th>
-                <th style="width: 50%; text-align: left;">Harvest Description</th>
-                <th style="width: 10%;">Qty</th>
+                <th style="width: 45%; text-align: left;">Harvest Description</th>
+                <th style="width: 15%;">Qty</th>
                 <th style="width: 15%;">Rate (₹)</th>
                 <th style="width: 15%; text-align: right;">Amount</th>
             </tr>
@@ -175,6 +173,7 @@ $items_res = mysqli_query($con, $items_sql);
                 $item_qty = $item['cart_quantity'];
                 $item_price = $item['cart_price'];
                 $item_name = $item['product_name'];
+                $item_unit = $item['product_unit']; //
                 $item_amount = $item_qty * $item_price;
                 $subtotal += $item_amount;
             ?>
@@ -184,7 +183,7 @@ $items_res = mysqli_query($con, $items_sql);
                     <strong><?php echo htmlspecialchars($item_name); ?></strong><br>
                     <small class="text-muted"><i class="fas fa-qrcode me-1"></i> Verified Organic Batch</small>
                 </td>
-                <td><?php echo $item_qty; ?></td>
+                <td><?php echo $item_qty . ' ' . htmlspecialchars($item_unit); ?></td>
                 <td><?php echo number_format($item_price, 2); ?></td>
                 <td style="text-align: right; font-weight: 600;">₹<?php echo number_format($item_amount, 2); ?></td>
             </tr>

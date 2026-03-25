@@ -153,7 +153,7 @@
           <a class="nav-link" href="about.php">Our Roots</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="perfumes.php">Organic Products</a>
+          <a class="nav-link" href="product.php">Organic Products</a>
         </li>
 
         <?php if(isset($_SESSION["cartid"])): ?>

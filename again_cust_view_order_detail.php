@@ -134,17 +134,6 @@ if(isset($_REQUEST["ord"]))
         font-size: 1rem;
     }
 
-    .btn-remove {
-        color: #dc2626;
-        background: #fef2f2;
-        border: none;
-        padding: 10px 14px;
-        border-radius: 12px;
-        font-size: 0.9rem;
-        transition: 0.3s;
-    }
-    .btn-remove:hover { background: #dc2626; color: white; transform: rotate(10deg); }
-
     .btn-checkout {
         background: var(--agro-forest);
         color: white;
@@ -203,7 +192,6 @@ if(isset($_REQUEST["ord"]))
                                 <th>Weight/Qty</th>
                                 <th>Unit Price</th>
                                 <th>Settlement</th>
-                                
                             </tr>
                         </thead>
                         <tbody>
@@ -213,40 +201,38 @@ if(isset($_REQUEST["ord"]))
                                 $r5=mysqli_fetch_array($res5);
                                 $amt = $r3[2] * $r3[3];
                                 $tot = $tot + $amt;
+                                
+                                // Retrieve the unit from index 5
+                                $unit = $r5[5];
                             ?>
                                 <tr>
-                                    <td><img src="<?php echo $r5[5]; ?>" class="cart-img shadow-sm" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1147/1147805.png';"></td>
+                                    <td><img src="<?php echo $r5[6]; ?>" class="cart-img shadow-sm" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1147/1147805.png';"></td>
                                     <td>
                                         <div class="prod-name"><?php echo $r5[1]; ?></div>
                                         <div class="d-flex align-items-center justify-content-center mt-1">
-                                            <i class="fas fa-qrcode text-success small me-2"></i>
-                                            <small class="text-muted">Batch ID: #<?php echo $r3[1]; ?></small>
+                                            
                                         </div>
                                     </td>
                                     <td>
                                         <span class="qty-badge">
-                                            <?php echo $r3[2]; ?>
+                                            <?php echo $r3[2]; ?> <?php echo $unit; ?>
                                         </span>
                                     </td>
                                     <td><span class="price-text">₹<?php echo number_format($r3[3], 2); ?></span></td>
                                     <td><span class="amount-total">₹<?php echo number_format($amt, 2); ?></span></td>
-                                    
                                 </tr>
                             <?php } ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-
-            
-
         <?php 
         } else { ?>
             <div class="text-center py-5 animate__animated animate__zoomIn">
                 <i class="fas fa-basket-shopping fa-5x mb-4 empty-state-icon"></i>
                 <h2 class="text-dark fw-bold">Your basket is empty</h2>
                 <p class="text-muted lead">The marketplace is full of fresh organic produce waiting for you.</p>
-                <a href="perfumes.php" class="btn btn-checkout mt-3 px-5">Explore Marketplace</a>
+                <a href="product.php" class="btn btn-checkout mt-3 px-5">Explore Marketplace</a>
             </div>
         <?php } ?>
     </div>

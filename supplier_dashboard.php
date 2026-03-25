@@ -128,7 +128,7 @@ $total_revenue = $revenue_data['total_revenue'] ?? 0;
                 <div class="card-body p-4">
                     <small class="text-uppercase font-weight-bold opacity-75">My Harvest Items</small>
                     <h2 class="display-4 font-weight-bold my-2"><?php echo $total_perfumes; ?></h2>
-                    <a href="supplier_manage_perfume.php" class="btn btn-sm btn-outline-light-custom px-3">Update Inventory</a>
+                    <a href="supplier_manage_product.php" class="btn btn-sm btn-outline-light-custom px-3">Update Inventory</a>
                     <i class="fas fa-seedling icon-bg"></i>
                 </div>
             </div>
@@ -162,7 +162,7 @@ $total_revenue = $revenue_data['total_revenue'] ?? 0;
             <h4 class="mb-4 font-weight-bold text-dark">Quick Harvest Actions</h4>
         </div>
         <div class="col-md-4 mb-3">
-            <a href="supplier_manage_perfume.php" class="quick-action-card shadow-sm">
+            <a href="supplier_manage_product.php" class="quick-action-card shadow-sm">
                 <div class="d-flex align-items-center mb-2">
                     <i class="fas fa-plus-circle text-success fa-2x mr-3"></i>
                     <h5 class="mb-0 fw-bold">List New Produce</h5>

@@ -10,7 +10,6 @@ $edit_mode = false;
 if(isset($_POST["btnsave"])) {
     $cat = mysqli_real_escape_string($con, $_POST["txtcat"]);
     
-    // Auto-increment ID logic (Maintained original database structure)
     $res2 = mysqli_query($con, "SELECT MAX(category_id) FROM category_product");
     $row2 = mysqli_fetch_array($res2);
     $new_id = $row2[0] + 1;
@@ -23,16 +22,23 @@ if(isset($_POST["btnsave"])) {
     }
 }
 
-// --- 2. HANDLE DELETING CATEGORY ---
+// --- 2. HANDLE DELETING CATEGORY (With Dependency Check) ---
 if(isset($_GET['dcid'])) {
     $dcid = mysqli_real_escape_string($con, $_GET['dcid']);
-    $query = "DELETE FROM category_product WHERE category_id = '$dcid'";
-    if(mysqli_query($con, $query)) {
-        echo "<script>alert('Category Removed'); window.location='admin_manage_category.php';</script>";
+    
+    // Check if any products are using this category
+    $check_prod = mysqli_query($con, "SELECT * FROM product_detail WHERE category_id = '$dcid'");
+    if(mysqli_num_rows($check_prod) > 0) {
+        echo "<script>alert('Cannot Delete: This category has live products. Please remove or re-categorize products first.'); window.location='admin_manage_category.php';</script>";
+    } else {
+        $query = "DELETE FROM category_product WHERE category_id = '$dcid'";
+        if(mysqli_query($con, $query)) {
+            echo "<script>alert('Category Removed'); window.location='admin_manage_category.php';</script>";
+        }
     }
 }
 
-// --- 3. PREPARE EDIT MODE (Fetch existing data) ---
+// --- 3. PREPARE EDIT MODE ---
 if(isset($_GET['ecid'])) {
     $edit_mode = true;
     $ecid = mysqli_real_escape_string($con, $_GET['ecid']);
@@ -42,14 +48,20 @@ if(isset($_GET['ecid'])) {
     }
 }
 
-// --- 4. HANDLE UPDATING CATEGORY ---
+// --- 4. HANDLE UPDATING CATEGORY (With Dependency Check) ---
 if(isset($_POST["btnupdate"])) {
     $cat = mysqli_real_escape_string($con, $_POST["txtcat"]);
     $cid = mysqli_real_escape_string($con, $_GET['ecid']);
 
-    $query = "UPDATE category_product SET category_name = '$cat' WHERE category_id = '$cid'";
-    if(mysqli_query($con, $query)) {
-        echo "<script>alert('Category Updated Successfully'); window.location='admin_manage_category.php';</script>";
+    // Check if any products are using this category
+    $check_prod = mysqli_query($con, "SELECT * FROM product_detail WHERE category_id = '$cid'");
+    if(mysqli_num_rows($check_prod) > 0) {
+        echo "<script>alert('Cannot Update: This category has live products. Changes are restricted to maintain data integrity.'); window.location='admin_manage_category.php';</script>";
+    } else {
+        $query = "UPDATE category_product SET category_name = '$cat' WHERE category_id = '$cid'";
+        if(mysqli_query($con, $query)) {
+            echo "<script>alert('Category Updated Successfully'); window.location='admin_manage_category.php';</script>";
+        }
     }
 }
 ?>
@@ -59,83 +71,15 @@ if(isset($_POST["btnupdate"])) {
 
 <style>
     body { background-color: #f0f4f2; font-family: 'Public Sans', sans-serif; }
-    
-    .page-header { 
-        background: white; 
-        padding: 2.5rem 0; 
-        border-bottom: 3px solid #d1fae5; 
-        margin-bottom: 2rem; 
-    }
-
-    .form-card { 
-        background: white; 
-        border-radius: 16px; 
-        border: 1px solid #e2e8f0; 
-        padding: 30px; 
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); 
-    }
-
-    .custom-table-card { 
-        background: white; 
-        border-radius: 16px; 
-        border: 1px solid #e2e8f0; 
-        overflow: hidden; 
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); 
-    }
-
-    .btn-agro-action { 
-        background: #ff9f1c; /* Vibrant Organic Orange */
-        color: white; 
-        border-radius: 10px; 
-        padding: 12px; 
-        width: 100%; 
-        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-        border: none; 
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .btn-agro-action:hover { 
-        background: #e67e22; 
-        color: white; 
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(255, 159, 28, 0.3);
-    }
-
-    .badge-id { 
-        background: #dcfce7; 
-        color: #166534; 
-        padding: 4px 10px; 
-        border-radius: 6px; 
-        font-weight: 700; 
-        font-family: monospace; 
-    }
-
-    .text-harvest {
-        color: #1b4332; /* Forest Green */
-        font-weight: 700;
-    }
-
-    .table thead th {
-        background-color: #f8fafc;
-        color: #1b4332;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        border: none;
-        padding: 1.25rem;
-    }
-
-    .form-label {
-        color: #1b4332;
-        font-weight: 700;
-    }
-
-    .form-control:focus {
-        border-color: #95d5b2;
-        box-shadow: 0 0 0 0.2rem rgba(149, 213, 178, 0.25);
-    }
+    .page-header { background: white; padding: 2.5rem 0; border-bottom: 3px solid #d1fae5; margin-bottom: 2rem; }
+    .form-card { background: white; border-radius: 16px; border: 1px solid #e2e8f0; padding: 30px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+    .custom-table-card { background: white; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+    .btn-agro-action { background: #ff9f1c; color: white; border-radius: 10px; padding: 12px; width: 100%; transition: 0.3s; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .btn-agro-action:hover { background: #e67e22; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 159, 28, 0.3); }
+    .badge-id { background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-family: monospace; }
+    .text-harvest { color: #1b4332; font-weight: 700; }
+    .table thead th { background-color: #f8fafc; color: #1b4332; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; border: none; padding: 1.25rem; }
+    .form-label { color: #1b4332; font-weight: 700; }
 </style>
 
 <script>
@@ -172,7 +116,7 @@ if(isset($_POST["btnupdate"])) {
                 
                 <form method="post" name="form1">
                     <div class="mb-4">
-                        <label class="form-label small">Category Name (e.g., Organic Grains)</label>
+                        <label class="form-label small">Category Name</label>
                         <input type="text" class="form-control form-control-lg" name="txtcat" placeholder="Enter Category Name" value="<?php echo $cat1; ?>" required>
                     </div>
 
@@ -202,20 +146,34 @@ if(isset($_POST["btnupdate"])) {
                             <tr>
                                 <th class="p-4">Ref. ID</th>
                                 <th class="p-4">Category Name</th>
+                                <th class="p-4">Status</th>
                                 <th class="p-4 text-end">Management</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            // Querying existing perfume category table to maintain backward compatibility
                             $res3 = mysqli_query($con, "SELECT * FROM category_product ORDER BY category_id DESC");
                             if(mysqli_num_rows($res3) > 0) {
                                 while($r3 = mysqli_fetch_array($res3)) {
+                                    // Check if category is active (has products)
+                                    $check_active = mysqli_query($con, "SELECT COUNT(*) FROM product_detail WHERE category_id = '$r3[0]'");
+                                    $active_count = mysqli_fetch_array($check_active)[0];
                             ?>
                             <tr>
-                                <td class="p-4"><span class="badge-id">#C-<?php echo $r3[0]; ?></span></td>
+                                <td class="p-4"><span class="badge-id">#<?php echo $r3[0]; ?></span></td>
                                 <td class="p-4">
                                     <div class="fw-bold text-dark"><?php echo $r3[1]; ?></div>
+                                </td>
+                                <td class="p-4">
+                                    <?php if($active_count > 0): ?>
+                                        <span class="badge bg-soft-success text-success" style="background:#e8f5e9; padding:5px 10px; border-radius:5px; font-size:11px;">
+                                            <i class="fas fa-check-circle me-1"></i> <?php echo $active_count; ?> Live Products
+                                        </span>
+                                    <?php else: ?>
+                                        <span class="badge bg-soft-secondary text-muted" style="background:#f1f5f9; padding:5px 10px; border-radius:5px; font-size:11px;">
+                                            No Products
+                                        </span>
+                                    <?php endif; ?>
                                 </td>
                                 <td class="p-4 text-end">
                                     <a href="admin_manage_category.php?ecid=<?php echo $r3[0]; ?>" 
@@ -232,10 +190,7 @@ if(isset($_POST["btnupdate"])) {
                             <?php 
                                 }
                             } else {
-                                echo "<tr><td colspan='3' class='text-center p-5 text-muted'>
-                                        <i class='fas fa-folder-open fa-3x mb-3 opacity-25'></i>
-                                        <p>No crop categories defined yet.</p>
-                                      </td></tr>";
+                                echo "<tr><td colspan='4' class='text-center p-5 text-muted'>No crop categories defined yet.</td></tr>";
                             }
                             ?>
                         </tbody>

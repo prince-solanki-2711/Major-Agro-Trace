@@ -130,7 +130,7 @@ include("connect.php");
                 <tbody>
                     <?php while ($r = mysqli_fetch_array($query)) { ?>
                     <tr>
-                        <td><span class="order-id">#AT-<?php echo $r[0]; ?></span></td>
+                        <td><span class="order-id">#<?php echo $r[0]; ?></span></td>
                         <td>
                             <div class="small text-muted">
                                 <i class="far fa-clock me-1 text-success"></i> 
@@ -139,7 +139,7 @@ include("connect.php");
                         </td>
                         <td>
                             <div class="fw-bold text-dark">Consumer #<?php echo $r[3]; ?></div>
-                            <div class="small text-muted">Batch ID: #<?php echo $r[2]; ?></div>
+                            
                         </td>
                         <td>
                             <div class="address-box" title="<?php echo $r[4]; ?>">

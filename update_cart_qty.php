@@ -3,7 +3,7 @@ session_start();
 include("header.php");
 include("connect.php");
 
-// YOUR ORIGINAL LOGIC - UNTOUCHED
+// YOUR ORIGINAL LOGIC - UPDATED TO FETCH UNIT AND FIX IMAGE INDEX
 $oqty = $_REQUEST['oqty'];
 $pid = $_REQUEST['pid'];
 $res1 = mysqli_query($con, "select * from product_detail where product_id='$pid'");
@@ -12,8 +12,9 @@ $name = $r1[1];
 $catid = $r1[2];
 $desc = $r1[3];
 $price = $r1[4];
-$pimg1 = $r1[5];
-$sid = $r1[6];
+$unit = $r1[5]; // <--- NEW: Fetching the unit (kg, Dozen, etc.)
+$pimg1 = $r1[6]; // <--- FIXED: Updated index to 6 for the product image
+$sid = $r1[7]; // Fixed index for farmer_id
 ?>
 
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -70,7 +71,6 @@ $sid = $r1[6];
         font-family: 'Public Sans', sans-serif; 
     }
 
-    /* Page Heading */
     .page-title {
         font-family: 'Outfit', sans-serif;
         font-weight: 800;
@@ -79,7 +79,6 @@ $sid = $r1[6];
         letter-spacing: -1px;
     }
 
-    /* Image Container Fix */
     .product-preview-img {
         max-height: 450px;
         width: 100%;
@@ -91,7 +90,6 @@ $sid = $r1[6];
         border: 1px solid #eef2f1;
     }
 
-    /* Modern Glassmorphism Form Card */
     .agro-update-card {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
@@ -181,16 +179,14 @@ $sid = $r1[6];
         <div class="col-md-6">
             <div class="position-relative animate__animated animate__fadeInLeft">
                 <img src="<?php echo $pimg1; ?>" class="product-preview-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1147/1147805.png';">
-                <div class="position-absolute shadow" style="bottom: 20px; right: 20px;">
-                    <i class="fas fa-qrcode fa-3x text-success bg-white p-2 rounded"></i>
-                </div>
+               
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="agro-update-card animate__animated animate__fadeInRight">
                 <form method="post" name="form1">
-                    <div class="batch-id">BATCH #<?php echo str_pad($pid, 4, '0', STR_PAD_LEFT); ?></div>
+                    
                     
                     <div class="info-group">
                         <p class="info-label">Produce Name</p>
@@ -204,12 +200,10 @@ $sid = $r1[6];
 
                     <div class="info-group">
                         <p class="info-label">Current Market Price</p>
-                        <h4 class="info-value text-success">₹ <?php echo number_format($price, 2); ?> <small class="text-muted" style="font-size: 0.8rem;">/ Unit</small></h4>
-                    </div>
+                        <h4 class="info-value text-success">₹ <?php echo number_format($price, 2); ?> <small class="text-muted" style="font-size: 0.8rem;">/ <?php echo $unit; ?></small></h4> </div>
 
                     <div class="form-group mb-4">
-                        <label class="info-label" style="color: var(--agro-forest);">Modify Weight / Quantity</label>
-                        <div class="input-group">
+                        <label class="info-label" style="color: var(--agro-forest);">Modify Quantity in <?php echo $unit; ?></label> <div class="input-group">
                             <span class="input-group-text bg-white border-end-0" style="border-radius: 15px 0 0 15px; border: 2px solid #f1f5f9;">
                                 <i class="fas fa-shopping-basket text-success"></i>
                             </span>

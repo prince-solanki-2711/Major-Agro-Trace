@@ -170,10 +170,10 @@ include("connect.php");
                 <tbody>
                     <?php while ($r = mysqli_fetch_array($res)) { ?>
                     <tr>
-                        <td><span class="bill-id">#AT-INV<?php echo $r[0]; ?></span></td>
+                        <td><span class="bill-id">#INV<?php echo $r[0]; ?></span></td>
                         <td>
                             <div class="fw-bold text-dark"><?php echo date('d M, Y', strtotime($r[1])); ?></div>
-                            <small class="text-muted">Batch: #<?php echo $r[6]; ?></small>
+                           
                         </td>
                         <td>
                             <span class="customer-name"><?php echo $r[2]; ?></span>

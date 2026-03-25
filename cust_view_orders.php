@@ -188,7 +188,7 @@ if (!isset($_SESSION["custid"])) {
                     <table class="custom-table">
                         <thead>
                             <tr>
-                                <th>Tracking ID</th>
+                                <th>ID</th>
                                 <th>Harvest Date</th>
                                 <th>Delivery Destination</th>
                                 <th>Settlement</th>
@@ -198,12 +198,11 @@ if (!isset($_SESSION["custid"])) {
                         <tbody>
                             <?php while($r3 = mysqli_fetch_array($res3)) { ?>
                                 <tr>
-                                    <td><span class="order-ref">#AT-<?php echo str_pad($r3[0], 5, '0', STR_PAD_LEFT); ?></span></td>
+                                    <td><span class="order-ref">#<?php echo $r3[0]; ?></span></td>
                                     <td>
                                         <div class="text-dark fw-bold"><?php echo date('d M, Y', strtotime($r3[1])); ?></div>
                                         <div class="d-flex align-items-center mt-1">
-                                            <i class="fas fa-qrcode text-success small me-2"></i>
-                                            <small class="text-muted">Batch #<?php echo $r3[2]; ?></small>
+                                           
                                         </div>
                                     </td>
                                     <td>

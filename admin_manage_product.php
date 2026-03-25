@@ -117,7 +117,7 @@ if(isset($_GET['del_id'])) {
 <div class="container pb-5">
     <div class="manage-card">
         <?php
-        // SQL query remains identical, fetching from existing tables but labeled as "Produce" and "Farmers"
+        // SQL query remains identical, product_unit is included in p.*
         $sql = "SELECT p.*, 
                 (SELECT category_name FROM category_product WHERE category_id = p.category_id) as cat_name,
                 (SELECT farmer_name FROM farmer_detail WHERE farmer_id = p.farmer_id) as sup_name
@@ -131,7 +131,7 @@ if(isset($_GET['del_id'])) {
             <table class="table align-middle">
                 <thead>
                     <tr>
-                        <th class="text-center">Produce</th>
+                        <th class="text-center">Product</th>
                         <th>Harvest Details</th>
                         <th>Crop Category</th>
                         <th>Farmer / Source</th>
@@ -143,6 +143,7 @@ if(isset($_GET['del_id'])) {
                     <?php while($row = mysqli_fetch_array($result)) { 
                         $display_cat = $row['cat_name'] ? $row['cat_name'] : "Seasonal";
                         $display_sup = $row['sup_name'] ? $row['sup_name'] : "Direct Farm";
+                        $display_unit = $row['product_unit']; // New variable for the unit
                     ?>
                     <tr>
                         <td class="text-center">
@@ -150,11 +151,14 @@ if(isset($_GET['del_id'])) {
                         </td>
                         <td>
                             <div class="fw-bold text-dark"><?php echo $row['product_name']; ?></div>
-                            <small class="text-muted">Batch: #AG-<?php echo $row['product_id']; ?></small>
+                            
                         </td>
                         <td><span class="badge-category"><?php echo $display_cat; ?></span></td>
                         <td><span class="text-secondary"><i class="fas fa-tractor mr-1 small"></i> <?php echo $display_sup; ?></span></td>
-                        <td><span class="price-tag">₹ <?php echo number_format($row['product_price'], 2); ?></span></td>
+                        <td>
+                            <span class="price-tag">₹ <?php echo number_format($row['product_price'], 2); ?></span>
+                            <br>
+                            <small class="text-muted">per <?php echo $display_unit; ?></small> </td>
                         <td class="text-center">
                             <a href="admin_manage_product.php?del_id=<?php echo $row['product_id']; ?>" 
                                class="btn-delete-icon" 

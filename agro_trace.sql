@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 10, 2026 at 02:12 PM
+-- Generation Time: Mar 25, 2026 at 07:29 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -47,24 +47,6 @@ INSERT INTO `admin_detail` (`admin_id`, `admin_name`, `admin_email`, `admin_pass
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bill_detail`
---
-
-DROP TABLE IF EXISTS `bill_detail`;
-CREATE TABLE IF NOT EXISTS `bill_detail` (
-  `bill_id` int(10) NOT NULL,
-  `bill_date` date NOT NULL,
-  `order_id` int(10) NOT NULL,
-  `cart_id` int(10) NOT NULL,
-  `customer_id` int(10) NOT NULL,
-  `bill_amount` int(20) NOT NULL,
-  `farmer_id` int(10) NOT NULL,
-  PRIMARY KEY (`bill_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `cart_detail`
 --
 
@@ -75,13 +57,6 @@ CREATE TABLE IF NOT EXISTS `cart_detail` (
   `cart_quantity` int(10) NOT NULL,
   `cart_price` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `cart_detail`
---
-
-INSERT INTO `cart_detail` (`cart_id`, `product_id`, `cart_quantity`, `cart_price`) VALUES
-(1, 1, 1, 1000);
 
 -- --------------------------------------------------------
 
@@ -96,13 +71,6 @@ CREATE TABLE IF NOT EXISTS `cart_master` (
   PRIMARY KEY (`cart_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `cart_master`
---
-
-INSERT INTO `cart_master` (`cart_id`, `cart_date`) VALUES
-(1, '2026-03-08');
-
 -- --------------------------------------------------------
 
 --
@@ -115,13 +83,6 @@ CREATE TABLE IF NOT EXISTS `category_product` (
   `category_name` varchar(50) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `category_product`
---
-
-INSERT INTO `category_product` (`category_id`, `category_name`) VALUES
-(1, 'hybrid');
 
 -- --------------------------------------------------------
 
@@ -146,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `customer_detail` (
 --
 
 INSERT INTO `customer_detail` (`customer_id`, `customer_name`, `customer_address`, `customer_city`, `customer_mobile`, `customer_email`, `customer_pass`) VALUES
-(1, 'meril', 'rama appartment g-5 valsad pardi valsad\r\nNA', 'Valsad Chhipwad ', '9876543210', 'customer@gmail.com', '123456');
+(1, 'prince', 'valsad', 'valsad', '1234567890', 'prince@gmail.com', '123456');
 
 -- --------------------------------------------------------
 
@@ -165,14 +126,14 @@ CREATE TABLE IF NOT EXISTS `farmer_detail` (
   `farmer_pass` varchar(10) NOT NULL,
   `farmer_status` varchar(20) NOT NULL DEFAULT 'Pending',
   PRIMARY KEY (`farmer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `farmer_detail`
 --
 
 INSERT INTO `farmer_detail` (`farmer_id`, `farmer_name`, `farmer_address`, `farmer_city`, `farmer_mobile`, `farmer_email`, `farmer_pass`, `farmer_status`) VALUES
-(1, 'meril', 'rama appartment g-5 valsad pardi valsad\r\nNA', 'Valsad Chhipwad ', '9876543210', 'supplier@gmail.com', '123456', 'Verified');
+(1, 'farmer', 'valsad', 'valsad', '1234567890', 'farmer@gmail.com', '123456', 'Verified');
 
 -- --------------------------------------------------------
 
@@ -192,13 +153,6 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `order_detail`
---
-
-INSERT INTO `order_detail` (`order_id`, `order_date`, `cart_id`, `customer_id`, `order_address`, `order_mobile`, `order_amount`) VALUES
-(1, '2026-03-08', 1, 1, 'ss', '9876543210', 1000);
-
 -- --------------------------------------------------------
 
 --
@@ -212,6 +166,7 @@ CREATE TABLE IF NOT EXISTS `product_detail` (
   `category_id` int(10) NOT NULL,
   `product_description` varchar(200) NOT NULL,
   `product_price` int(10) NOT NULL,
+  `product_unit` varchar(20) NOT NULL,
   `product_image` varchar(50) NOT NULL,
   `farmer_id` int(10) NOT NULL,
   PRIMARY KEY (`product_id`),

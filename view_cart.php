@@ -53,7 +53,6 @@ if(isset($_REQUEST["ord"]))
 
     .page-content { flex: 1; padding-bottom: 80px; }
 
-    /* Fresh Market Header */
     .cart-header { 
         background: white; 
         padding: 4.5rem 0 3rem 0; 
@@ -69,7 +68,6 @@ if(isset($_REQUEST["ord"]))
         letter-spacing: -1.5px;
     }
 
-    /* Professional Market Table */
     .cart-container {
         background: white;
         border-radius: 30px;
@@ -102,7 +100,6 @@ if(isset($_REQUEST["ord"]))
         border-bottom: 1px solid #f1f5f9;
     }
 
-    /* Product Visuals */
     .cart-img {
         width: 90px;
         height: 90px;
@@ -123,7 +120,6 @@ if(isset($_REQUEST["ord"]))
     .price-text { font-weight: 500; color: #64748b; }
     .amount-total { font-weight: 800; color: var(--agro-forest); font-size: 1.1rem; }
 
-    /* Quantity Badge Style */
     .qty-badge {
         background: var(--agro-mint);
         color: var(--agro-forest);
@@ -133,7 +129,6 @@ if(isset($_REQUEST["ord"]))
         font-size: 1rem;
     }
 
-    /* Action Buttons */
     .btn-qty-edit {
         background-color: #f1f5f9;
         color: var(--agro-leaf);
@@ -161,7 +156,6 @@ if(isset($_REQUEST["ord"]))
     }
     .btn-remove:hover { background: #dc2626; color: white; transform: rotate(10deg); }
 
-    /* Summary Section */
     .cart-summary {
         background: white;
         padding: 40px;
@@ -239,22 +233,24 @@ if(isset($_REQUEST["ord"]))
                                 $r5 = mysqli_fetch_array($res5);
                                 $amt = $r3[2] * $r3[3];
                                 $tot = $tot + $amt;
+                                
+                                // Dynamic Unit and Fixed Image Index
+                                $unit_name = $r5[5]; 
+                                $image_path = $r5[6]; 
                             ?>
                                 <tr>
                                     <td class="text-center">
-                                        <img src="<?php echo $r5[5]; ?>" class="cart-img shadow-sm" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1147/1147805.png';">
+                                        <img src="<?php echo $image_path; ?>" class="cart-img shadow-sm" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1147/1147805.png';">
                                     </td>
                                     <td>
                                         <div class="prod-name"><?php echo $r5[1]; ?></div>
                                         <div class="d-flex align-items-center mt-1">
-                                            <i class="fas fa-qrcode text-success small me-2"></i>
-                                            <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem;">Batch #<?php echo str_pad($r3[1], 4, '0', STR_PAD_LEFT); ?></small>
+                                            
                                         </div>
                                     </td>
                                     <td class="text-center">
                                         <span class="qty-badge">
-                                            <?php echo $r3[2]; ?>
-                                        </span>
+                                            <?php echo $r3[2]; ?> <?php echo $unit_name; ?> </span>
                                     </td>
                                     <td><span class="price-text">₹<?php echo number_format($r3[3], 2); ?></span></td>
                                     <td><span class="amount-total">₹<?php echo number_format($amt, 2); ?></span></td>
@@ -296,7 +292,7 @@ if(isset($_REQUEST["ord"]))
                 <i class="fas fa-basket-shopping fa-5x mb-4 empty-state-icon"></i>
                 <h2 class="text-dark fw-bold">Your basket is empty</h2>
                 <p class="text-muted lead">The marketplace is full of fresh organic produce waiting for you.</p>
-                <a href="perfumes.php" class="btn btn-checkout mt-3 px-5">Explore Marketplace</a>
+                <a href="product.php" class="btn btn-checkout mt-3 px-5">Explore Marketplace</a>
             </div>
         <?php } ?>
     </div>

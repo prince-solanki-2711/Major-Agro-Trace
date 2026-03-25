@@ -119,7 +119,7 @@ include("header.php");
         <p class="text-muted lead px-lg-4">Your organic selection has been processed successfully. Our farmers are preparing your delivery right now.</p>
         
         <div class="d-flex flex-wrap justify-content-center gap-3 mt-5">
-            <a href="perfumes.php" class="btn-agro-outline mr-md-2 mb-3">
+            <a href="product.php" class="btn-agro-outline mr-md-2 mb-3">
                 <i class="fas fa-basket-shopping mr-2"></i> Marketplace
             </a>
             <a href="cust_view_orders.php" class="btn-agro-solid mb-3">

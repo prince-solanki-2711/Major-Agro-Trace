@@ -149,7 +149,7 @@ if(isset($_GET['del_id'])) {
                         $initial = substr($r[1], 0, 1);
                     ?>
                     <tr>
-                        <td class="text-muted fw-bold">#AT-C<?php echo $r[0]; ?></td>
+                        <td class="text-muted fw-bold">#<?php echo $r[0]; ?></td>
                         <td>
                             <div class="d-flex align-items-center">
                                 <div class="user-avatar"><?php echo $initial; ?></div>

@@ -119,7 +119,7 @@ $oid = isset($_GET['oid']) ? $_GET['oid'] : "0";
 
         <div class="order-summary d-flex justify-content-between align-items-center">
             <div>
-                <span class="small text-uppercase fw-bold text-success d-block" style="letter-spacing: 1px;">Tracking #AT-<?php echo str_pad($oid, 5, '0', STR_PAD_LEFT); ?></span>
+               
                 <span class="font-weight-bold text-dark h5">Total Valuation</span>
             </div>
             <h3 class="mb-0 font-weight-bold" style="color: var(--agro-forest);">₹<?php echo number_format($amount); ?></h3>
