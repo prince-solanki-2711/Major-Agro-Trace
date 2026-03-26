@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 26, 2026 at 01:00 PM
+-- Generation Time: Mar 26, 2026 at 02:06 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -58,6 +58,14 @@ CREATE TABLE IF NOT EXISTS `cart_detail` (
   `cart_price` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `cart_detail`
+--
+
+INSERT INTO `cart_detail` (`cart_id`, `product_id`, `cart_quantity`, `cart_price`) VALUES
+(1, 1, 5, 30),
+(2, 1, 1, 30);
+
 -- --------------------------------------------------------
 
 --
@@ -70,6 +78,14 @@ CREATE TABLE IF NOT EXISTS `cart_master` (
   `cart_date` date NOT NULL,
   PRIMARY KEY (`cart_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cart_master`
+--
+
+INSERT INTO `cart_master` (`cart_id`, `cart_date`) VALUES
+(1, '2026-03-26'),
+(2, '2026-03-26');
 
 -- --------------------------------------------------------
 
@@ -163,6 +179,14 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
   `order_amount` int(10) NOT NULL,
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_detail`
+--
+
+INSERT INTO `order_detail` (`order_id`, `order_date`, `cart_id`, `customer_id`, `order_address`, `order_mobile`, `order_amount`) VALUES
+(1, '2026-03-26', 1, 1, 'valsad halar', '1209778091', 150),
+(2, '2026-03-26', 2, 1, 'tithal raod', '9876543210', 30);
 
 -- --------------------------------------------------------
 
