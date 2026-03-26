@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 25, 2026 at 07:29 PM
+-- Generation Time: Mar 26, 2026 at 01:00 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -84,6 +84,17 @@ CREATE TABLE IF NOT EXISTS `category_product` (
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `category_product`
+--
+
+INSERT INTO `category_product` (`category_id`, `category_name`) VALUES
+(1, 'Fresh Vegetables'),
+(2, 'Fresh Fruits'),
+(3, 'Grains '),
+(4, 'Pulses'),
+(6, 'Spices and Condiments');
+
 -- --------------------------------------------------------
 
 --
@@ -126,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `farmer_detail` (
   `farmer_pass` varchar(10) NOT NULL,
   `farmer_status` varchar(20) NOT NULL DEFAULT 'Pending',
   PRIMARY KEY (`farmer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `farmer_detail`
@@ -172,6 +183,26 @@ CREATE TABLE IF NOT EXISTS `product_detail` (
   PRIMARY KEY (`product_id`),
   KEY `category_id` (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product_detail`
+--
+
+INSERT INTO `product_detail` (`product_id`, `product_name`, `category_id`, `product_description`, `product_price`, `product_unit`, `product_image`, `farmer_id`) VALUES
+(1, 'Tomato', 1, 'Fresh red farm tomatoes, juicy and rich in flavor', 30, 'kg', 'perfume_img/1774528360.png', 1),
+(2, 'Potato', 1, 'Medium-sized fresh potatoes, ideal for daily cooking', 25, 'kg', 'perfume_img/1774528437.png', 1),
+(3, 'Onion', 1, 'Strong-flavored onions, perfect for Indian dishes', 28, 'kg', 'perfume_img/1774528577.png', 1),
+(4, 'Spinach', 1, 'Fresh green leafy spinach, rich in iron', 20, 'Grams', 'perfume_img/1774528700.png', 1),
+(5, 'Mango', 2, 'Sweet and premium quality mangoes directly from farm', 120, 'kg', 'perfume_img/1774528764.png', 1),
+(6, 'Banana', 2, 'Naturally ripened bananas, soft and nutritious', 40, 'Dozen', 'perfume_img/1774528824.png', 1),
+(7, 'Apple', 2, 'Juicy and crispy apples from hill farms', 150, 'kg', 'perfume_img/1774528914.png', 1),
+(8, 'Papaya', 2, 'Sweet and fresh papaya, rich in vitamins', 35, 'kg', 'perfume_img/1774529019.png', 1),
+(9, 'Wheat', 3, 'High-quality whole wheat grains for flour', 30, 'kg', 'perfume_img/1774529291.png', 1),
+(10, 'Basmati Rice', 3, 'Long grain aromatic rice, premium quality', 90, 'kg', 'perfume_img/1774529371.png', 1),
+(11, 'Toor Dal', 4, 'Clean and processed pigeon peas for daily meals', 110, 'kg', 'perfume_img/1774529424.png', 1),
+(12, 'Moong Dal', 4, 'Light and healthy green gram, easy to digest', 120, 'kg', 'perfume_img/1774529504.png', 1),
+(13, 'Tumeric', 6, 'Pure and natural turmeric with strong aroma', 90, 'kg', 'perfume_img/1774529766.png', 1),
+(14, 'Red Chilli', 6, 'Dried red chillies with strong spice level', 120, 'kg', 'perfume_img/1774529859.png', 1);
 
 --
 -- Constraints for dumped tables
